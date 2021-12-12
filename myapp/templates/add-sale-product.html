@@ -1,0 +1,96 @@
+{% extends 'index2.html' %}
+{%block username%}{{username}}{%endblock%}
+{%block title%}
+Add Product
+{%endblock%}
+{%block content%}
+
+<div class="content-page"> 
+     <div class="container-fluid add-form-list">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">Add Sale bill</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form  method="POST" action="add-sale-items{{obj}}" data-toggle="validator">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="dob">Product*</label>
+                                        <input list="products" name="date" class="form-control" placeholder="Enter Product" required id="product" required="required">
+
+                                            <datalist name="date" id="products">
+                                                
+                                            {%for obje in objj%}
+                                                    <option value="{{obje.Product_name}}">{{obje.Product_name}}</option>
+                                                {%endfor%}
+                                            </datalist>
+                                           
+                                    </div>
+                                </div>  
+                                <div class="col-md-6">                      
+                                    <div class="form-group">
+                                        <label>Quantity *</label>
+                                        <input name="quanity" id="quantity" type="text" class="form-control" placeholder="Quantity" required>
+                                        
+                                            <div class="help-block with-errors" style="color: #f00; font-size: .9rem">
+                                               {{message1}}
+                                            </div>
+                                        
+                                    </div>
+                                </div>    
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Rate</label>
+                                        <input name="rate" type="text" id="rate" class="form-control" placeholder="Rate" required>
+
+                                    </div>
+                                </div> 
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Total</label>
+                                        <input name="total" type="text" id="totals" class="form-control" placeholder="Total" required>
+                                        <input type="number" value="0" id="discount" hidden>
+                                        <input type="number" value="0" id="vat" hidden>
+                                    </div>
+                                </div> 
+                                {% comment %} <div class="col-md-6"> 
+                                    <div class="form-group">
+                                        <label>Cost Price</label>
+                                        <select name="type" class="selectpicker form-control" data-style="py-0">
+                                            <option>Received</option>
+                                            <option>Not received yet</option>
+                                        </select>
+                                    </div>
+                                </div>   {% endcomment %}
+                               
+                            <button type="submit" class="btn btn-primary mr-2">Add Products</button>
+                           
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page end  -->
+    </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+        console.log("HEllow wrold")
+        function ratess() {
+            var quan = document.getElementById('quantity')
+            var rats = document.getElementById('rate')
+            {% comment %} var dis = document.getElementById('discount') {% endcomment %}
+            var final = quan.value * rats.value
+            document.getElementById("totals").value=final            }
+        </script>
+{%endblock%}
+   

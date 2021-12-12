@@ -1,0 +1,17 @@
+{% extends 'page-list-sale.html' %}
+{%block username%}{{username}}{%endblock%}
+{%block list-sale%}<li class="">{%endblock%}
+{%block list-return%}<li class="active">{%endblock%}
+{%block title%} Return List {%endblock%}
+{%block sales%}Return List{%endblock%}
+{%block link%}<a href="{% url 'add-return' %}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Add Return</a>{%endblock%}
+{%block search%}<form method='POST' action='searchreturn'>
+    {% csrf_token %}
+<label class="d-flex">
+    Search: 
+    <input type="text" name="search" class="form-control form-control-sm" placeholder="Search here..." aria-controls="DataTables_Table_0">
+       
+</label>
+</form>
+{%endblock%}
+{%block line%}Here are the listing of your Returns.....{%endblock%}

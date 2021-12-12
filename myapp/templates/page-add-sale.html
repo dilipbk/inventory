@@ -1,0 +1,167 @@
+{% extends 'index2.html' %}
+{%block head2%}{{business}}{%endblock%}
+{%block username%}{{username}}{%endblock%}
+{%block add-sale%}<li class="active">{%endblock%}
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%}  Add Sales {%endblock%} 
+    </title>
+
+    {% comment %} <script type="text/javascript">
+        console.log("HEllow wrold")
+        function calc() {
+            var total = document.getElementById('totals')
+            console.log(total.value)
+            var paid = document.getElementById('paids')
+            console.log(paid.value)
+            var lef = total.value - paid.value
+            if lef>0:
+                var app = document.getElementById('lefts').value = "Due";
+            else:
+            var app = document.getElementById('lefts').value = "Paid";
+
+            app = lef;
+            console.log(lef)
+        }
+       
+        function ratess() {
+            var quan = document.getElementById('quantity')
+            var rats = document.getElementById('rate')
+            var dis = document.getElementById('discount')
+            var final = quan.value * rats.value
+            var discount = (dis.value * final) / 100
+            var tots = document.getElementById('totals').value = final - discount
+            tots = Math.round(final - discount, 2);
+        }
+    </script> {% endcomment %}
+    
+</head>
+<body>
+    {%block content%}
+    <div class="content-page">
+        <div class="container-fluid add-form-list">
+           <div class="row">
+               <div class="col-sm-12">
+                   <div class="card">
+                       <div class="card-header d-flex justify-content-between">
+                           <div class="header-title">
+                               <h4 class="card-title">Add Sale</h4>
+                           </div>
+                       </div>
+                       <div class="card-body">
+                           <form action="add-sale" method='POST' >
+                               {% csrf_token %}
+                               <div class="row">                                  
+                                   <div class="col-md-6">                      
+                                       <div class="form-group">
+                                           <label>Date *</label>
+                                           {% comment %} <input type="text" name="date" class="form-control" placeholder="Date"> {% endcomment %}
+                                           <input type="text" class="form-control"   name="date"  id="date_picker" data-hidden="true" placeholder=" Date" required>
+
+                                        </div>
+                                   </div>
+                                   <div class="col-md-6">
+                                       <div class="form-group">
+                                           <label>Product *</label>
+                                           <input list="products" name="product" class="form-control" placeholder="Enter Product" required id="product" required="required">
+
+                                            <datalist name="product" id="products">
+                                                
+                                            {%for obje in obj%}
+                                                    <option value="{{obje.Product_name}}">{{obje.Product_name}}</option>
+                                                {%endfor%}
+                                            </datalist>
+                                           <div class="help-block with-errors" style="color: #f00; font-size: .9rem">
+                                               {{message1}}
+                                           </div>
+                                       </div>
+                                   </div> 
+                                   <div class="col-md-6">
+                                       <div class="form-group">
+                                           <label>Customer  *</label>
+                                           <input type="text" name="customer" class="form-control" placeholder="Enter CUstomer Name">
+                                       </div> 
+                                   </div>  
+                                   <div class="col-md-6">
+                                       <div class="form-group">
+                                           <label>Quantity *</label>
+                                           <input type="text" name="quantity" id="quantity" class="form-control" placeholder="Quantity" required>
+                                           <div style="color: #f00; font-size: .9rem" class="help-block with-errors">{{message2}}</div>
+                                       </div>
+                                   </div>   
+                                   <div class="col-md-6"> 
+                                       <div class="form-group">
+                                           <label>Rate</label>
+                                           <input type="text" name="rate" id="rate" class="form-control" placeholder="Rate" required>
+
+                                       </div>
+                                   </div> 
+                                   <div class="col-md-6">
+                                       <div class="form-group">
+                                           <label>Discount (%)</label>
+                                           <input type="number" name="discount" id="discount"class="form-control" value="0" placeholder="Discount">
+                                       </div>
+                                   </div> 
+                                   <div class="col-md-6">
+                                       <div class="form-group">
+                                           <label>VAT%</label>
+                                           <input type="text" name="vat" id="vat" class="form-control" placeholder="Vat" value="0">
+                                       </div>
+                                   </div>
+
+                                  
+                                   {% comment %} <div class="col-md-12">
+                                       <div class="form-group">
+                                           <label>Attach Document</label>
+                                           <input type="file" class="form-control image-file" name="pic" accept="image/*">
+                                       </div>
+                                   </div> {% endcomment %}
+                                   <div class="col-md-6"> 
+                                       <div class="form-group">
+                                           <label>Total*</label>
+                                           <input type="text" name="total" id="totals" class="form-control" placeholder="Total" >
+                                       </div>
+                                   </div> 
+                                   <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Paid</label>
+                                        <input type="text" name="paid" id="paid" class="form-control" placeholder="Paid Amount">
+                                    </div>
+                                </div>
+                                   <div class="col-md-6"> 
+                                       <div class="form-group">
+                                           <label>Payment Status *</label>
+                                           <!-- <select name="type" id="lefts" class="selectpicker form-control" data-style="py-0">
+                                               {% comment %} <option>Pending</option> {% endcomment %}
+                                               <option value="0">Due</option>
+                                               <option value="1">Paid</option>
+                                           </select> -->
+                                           <input type="text" name="payment_status"  id="payment_status" class="form-control" value="Due" readonly>
+                                       </div>
+                                   </div> 
+                                   
+                                           <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Sales Notes</label>
+                                                <textarea name="salesnote" class="form-control" rows="4"></textarea>
+                                            </div>
+                                   </div> 
+                               </div>                            
+                               <button type="submit" class="btn btn-primary mr-2">Add Sale</button>
+                               <button type="reset" class="btn btn-danger">Reset</button>
+                           </form>
+                       </div>
+                   </div>
+               </div>
+           </div>
+      
+
+        <script src="{%static 'asset/assets/js/calc.js'%}"></script>
+    {%endblock%}
+</body>
+</html>

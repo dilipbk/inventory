@@ -1,0 +1,103 @@
+{% extends 'index2.html' %}
+{%block username%}{{username}}{%endblock%}
+{%block add-purchase%}<li class="active">{%endblock%}
+{%block title%}
+Add Purchase
+{%endblock%}
+{%block head2%}{{business}}{%endblock%}
+{%block content%}
+
+<div class="content-page"> 
+     <div class="container-fluid add-form-list">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">Add Purchase</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form  method="POST" action="{% url 'add-purchase' %}" data-toggle="validator">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="dob">Date *</label>
+                                        <input name="date" type="text" id="date_picker" class="form-control" id="dob" name="dob" />
+                                    </div>
+                                </div>  
+                                <div class="col-md-6">                      
+                                    <div class="form-group">
+                                        <label>Purchase No *</label>
+                                        <input name="pn" value="{{b}}" type="text" class="form-control" placeholder="Purchase No" required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>    
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Supplier</label>
+                                        <input name="type" type="text" class="form-control" >
+
+                                        </select>
+                                    </div>
+                                </div> 
+                                {% comment %} <div class="col-md-6"> 
+                                    <div class="form-group">
+                                        <label>Cost Price</label>
+                                        <select name="type" class="selectpicker form-control" data-style="py-0">
+                                            <option>Received</option>
+                                            <option>Not received yet</option>
+                                        </select>
+                                    </div>
+                                </div>   {% endcomment %}
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Vat %</label>
+                                        <input type="text" value="0" name="vat"class="form-control" placeholder="Vat Amount">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Discount (%)</label>
+                                        <input type="text" name="dis" value="0" class="form-control" placeholder="Discount">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Shipping</label>
+                                        <input type="text" name="ship"class="form-control" placeholder="Address">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Payment *</label>
+                                        <input name="Payment" type="text" class="form-control" placeholder="Payment Amount" required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Purchase  Note</label>
+                                        <textarea name="data-long" class="form-control" rows="4"></textarea>
+                                    </div>
+                                </div>                                
+                            </div>  
+                            {%if sent%}
+                            <button type="submit" class="btn btn-primary mr-2">Add Products</button>
+                            {% else %}          
+                            <button type="submit" class="btn btn-primary mr-2">Add Purchase</button>
+                            {%endif%}   
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page end  -->
+    </div>
+      </div>
+    </div>
+{%endblock%}
+   

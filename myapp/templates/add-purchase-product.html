@@ -1,0 +1,75 @@
+{% extends 'index2.html' %}
+{%block username%}{{username}}{%endblock%}
+{%block title%}
+Add Product
+{%endblock%}
+{%block content%}
+
+<div class="content-page"> 
+     <div class="container-fluid add-form-list">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">Add Purchase</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form  method="POST" action="add-purchase-items{{obj}}" data-toggle="validator">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="dob">Product*</label>
+                                        <input name="date" type="text" class="form-control" id="dob" />
+                                    </div>
+                                </div>  
+                                <div class="col-md-6">                      
+                                    <div class="form-group">
+                                        <label>Quantity *</label>
+                                        <input name="quanity" id="quantity" type="text" class="form-control" placeholder="Quantity" required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>    
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Rate</label>
+                                        <input name="rate" type="text" id="rate" class="form-control" placeholder="Rate" required>
+
+                                    </div>
+                                </div> 
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Total</label>
+                                        <input name="total" type="text" id="totals" class="form-control" placeholder="Total" required>
+                                        <input type="number" value="0" id="discount" hidden>
+                                        <input type="number" value="0" id="vat" hidden>
+                                    </div>
+                                </div> 
+                                {% comment %} <div class="col-md-6"> 
+                                    <div class="form-group">
+                                        <label>Cost Price</label>
+                                        <select name="type" class="selectpicker form-control" data-style="py-0">
+                                            <option>Received</option>
+                                            <option>Not received yet</option>
+                                        </select>
+                                    </div>
+                                </div>   {% endcomment %}
+                               
+                            <button type="submit" class="btn btn-primary mr-2">Add Products</button>
+                           
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Page end  -->
+    </div>
+      </div>
+    </div>
+{%endblock%}
+   

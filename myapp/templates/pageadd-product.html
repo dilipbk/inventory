@@ -1,0 +1,143 @@
+{% extends 'index2.html' %}
+{%block add-stock%}<li class="active">{%endblock%}
+{%block head2%}{{business}}{%endblock%}
+={%block username%}{{username}}{%endblock%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%}Add Product{%endblock%}</title>
+    
+</head>
+<body>
+{%block content%}
+ <div class="content-page">
+     <div class="container-fluid add-form-list">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <div class="header-title">
+                            <h4 class="card-title">{%block add%}Add Product{%endblock%}</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form action="{% url 'add-product' %}" method="POST"data-toggle="validator">
+                        {% csrf_token %}
+                            <div class="row">
+                                <!-- <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Product Type *</label>
+                                        <select name="type" class="selectpicker form-control" data-style="py-0">
+                                            <option>Standard</option>
+                                            <option>Combo</option>
+                                            <option>Digital</option>
+                                            <option>Service</option>
+                                        </select>
+                                    </div> 
+                                </div>   -->
+                                <div class="col-md-6">                      
+                                    <div class="form-group">
+                                        <label>Product *</label>
+
+                                        <input list="products" name="product" class="form-control" placeholder="Enter Product" required id="product" required="required">
+                       
+                                            <datalist name="product" id="products">
+                                                
+                                            {%for obje in obj%}
+                                                    <option value="{{obje.Product_name}}">{{obje.Product_name}}</option>
+                                                {%endfor%}
+                                            </datalist>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>    
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Suppliers</label>
+                                        <input type="text" name="suppliers" class="form-control" placeholder="Enter Suppliers.." data-errors="Please Enter Code.">
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div> 
+                                <div class="col-md-6"> 
+                                    <!-- <div class="form-group">
+                                        <label>Barcode Symbology *</label>
+                                        <select name="type" class="selectpicker form-control" data-style="py-0">
+                                            <option>CREM01</option>
+                                            <option>UM01</option>
+                                            <option>SEM01</option>
+                                            <option>COF01</option>
+                                            <option>FUN01</option>
+                                            <option>DIS01</option>
+                                            <option>NIS01</option>
+                                        </select>
+                                    </div> -->
+                                </div> 
+                                <div class="col-md-6">
+                                    <!-- <div class="form-group">
+                                        <label>Category *</label>
+                                        <select name="type" class="selectpicker form-control" data-style="py-0">
+                                            <option>Beauty</option>
+                                            <option>Grocery</option>
+                                            <option>Food</option>
+                                            <option>Furniture</option>
+                                            <option>Shoes</option>
+                                            <option>Frames</option>
+                                            <option>Jewellery</option>
+                                        </select>
+                                    </div> -->
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Cost Price *</label>
+                                        <input type="text" name="cp" class="form-control" placeholder="Enter Cost" data-errors="Please Enter Cost." required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Selling Price*</label>
+                                        <input type="text" name="sp" class="form-control" placeholder="Enter Price" data-errors="Please Enter Price." >
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Tax Method *</label>
+                                        <select name="type" class="selectpicker form-control" data-style="py-0">
+                                            <option>Exclusive</option>
+                                            <option>Inclusive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">                                    
+                                    <div class="form-group">
+                                        <label>Quantity *</label>
+                                        <input type="text" name="quantity" id="quantity" class="form-control" placeholder="Enter Quantity" required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <!-- <div class="form-group">
+                                        <label>Image</label>
+                                        <input type="file" class="form-control image-file" name="pic" accept="image/*">
+                                    </div> -->
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Description / Product Details</label>
+                                        <textarea name="des" class="form-control" rows="4"></textarea>
+                                    </div>
+                                </div>
+                            </div>                            
+                            <button type="submit" class="btn btn-primary mr-2">Add Product</button>
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+{%endblock%}
+</body>
+</html>

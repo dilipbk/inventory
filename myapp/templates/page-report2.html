@@ -1,0 +1,399 @@
+{% extends 'index2.html' %}
+{%block head2%}{{business}}{%endblock%}
+{%block username%}{{username}}{%endblock%}
+{%block report%}<li class="active">{%endblock%}
+{%block title%}
+Report
+{%endblock%}
+
+{%block content%}
+     <div class="content-page">
+     <div class="container-fluid">
+        <div class="search-bar">
+          <form action="search-report" method='POST'>
+              {% csrf_token %}
+            <div class="row">
+              <div class="col-md-4 col-sm-12">
+                <label for="from" class="form-label d-flex align-items-center">
+                  From
+                  <input class="ml-2 form-control" type="text" name="search_start" id="date_picker">
+                </label>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                <label for="to" class="form-label d-flex align-items-center">
+                  To
+                  <input class="ml-2 form-control" type="text" name="search_end" id="date_pickers">
+                </label>
+              </div>
+              <div class="col-md-4 col-sm-12 d-flex align-items-center">
+                <select  name="factor"  style="height: 40px" class="form-select form-select-sm mx-2" aria-label=".form-select-sm example">
+                  {% comment %} <option  >Open this select menu</option> {% endcomment %}
+                  <option selected value="Sales">Sales</option>
+                  <option value="Purchase">Purchase</option>
+                  <option value="Return">Return</option>
+                  <option value="Salesbill">Salesbill</option>
+                  
+                </select>
+                <input class="w-100 btn btn-primary" type="submit" value="Search">
+              </div>
+            </div>
+          </form>
+        </div>
+        {%if sales%}
+        
+        {% comment %} <div class="content-page"> {% endcomment %}
+            <div class="container-fluid">
+               <div class="row">
+                   <div class="col-lg-12">
+                       <div class="d-flex flex-wrap align-items-center justify-content-between mb-4">
+                           <div>
+                               <h4 class="mb-3">{%block sales%}Sale Report {%endblock%}</h4>
+                               <p class="mb-0">{%block lines%}From {{start}} to {{end}}{%endblock%}</p>
+                           </div>
+                           {% comment %} <a href="{% url 'add-sale' %}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Add Sale</a> {% endcomment %}
+                       </div>
+                   </div>
+                   <div class="col-lg-12">
+                       <div class="table-responsive rounded mb-3">
+                       <table class="data-table table mb-0 tbl-server-info">
+                           <thead class="bg-white text-uppercase">
+                               <tr class="ligth ligth-data">
+                                   <th>
+                                       <div class="checkbox d-inline-block">
+                                           {% comment %} <input type="checkbox" class="checkbox-input" id="checkbox1"> {% endcomment %}
+                                           <label for="checkbox1" class="mb-0">S.N</label>
+                                       </div>
+                                   </th>
+                                   <th>Date</th>
+                                   <th>Customer</th>
+                                   <th>Product</th>
+                                   <th>Total</th>
+                                   <th>Paid</th>
+                                   <th>Status</th>
+                                   {% comment %} <th>Status</th> {% endcomment %}
+                                   {% comment %} <th>Biller</th> {% endcomment %}
+                                   
+                                   <th>Action</th>
+                               </tr>
+                           </thead>
+                           <tbody class="ligth-body">
+                           {%for obj in object%}
+                               <tr>
+                                   <td>
+                                       <div class="checkbox d-inline-block">
+                                           {% comment %} <input type="checkbox" class="checkbox-input" id="checkbox2"> {% endcomment %}
+                                           <label for="checkbox2" class="mb-0">{{forloop.counter}}</label>
+                                       </div>
+                                   </td>
+                                   <td>{{obj.Date}}</td>
+                                   <td>{{obj.Customer}}</td>
+                                   <td>{{obj.Product}}</td>
+                                   <td>{{obj.Total}}</td>
+                                   <td>{{obj.Paid}}</td>
+                                   <td><div class="badge badge-success">{{obj.Payment_status}}  </div></td>
+                                   {% comment %} <td>Yerds</td> {% endcomment %}
+                                   {% comment %} <td>1.3</td> {% endcomment %}
+                                   <td>
+                                       <div class="d-flex align-items-center list-action">
+                                           <a class="badge badge-info mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="View"
+                                               href="view-sales-page-{{obj.id}}"><i class="ri-eye-line mr-0"></i></a>
+                                           <a class="badge bg-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"
+                                               href="edit-sales-page{{obj.id}}"><i class="ri-pencil-line mr-0"></i></a>
+                                           <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
+                                               href="#"><i class="ri-delete-bin-line mr-0"></i></a>
+                                       </div>
+                                   </td>
+                               </tr>
+                              {%endfor%}
+                           </tbody>
+                       </table>
+                       </div>
+                   </div>
+               </div>
+    
+               <script>
+                $('a[data-original-title="Delete"]').on('click', function() {
+                    console.log($('a[data-original-title="Delete"]'))
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "Once deleted, you will not be able to recover this imaginary file!",
+                        icon: "warning",
+                        buttons: [true, false],
+                        dangerMode: true,
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            Swal.fire("Poof! Your imaginary file has been deleted!", {
+                                icon: "success",
+                            });
+                        } else {
+                            Swal.fire("Your imaginary file is safe!");
+                        }
+                    });
+                });
+            </script>
+        
+            <!-- <script src="../asset/assets/js/sweetalert.js"></script> -->
+    
+            <!-- <script> -->
+                
+            </script>
+    
+                {% elif purchase %}
+                
+          
+            <div class="container-fluid">
+               <div class="row">
+                   <div class="col-lg-12">
+                       <div class="d-flex flex-wrap align-items-center justify-content-between mb-4">
+                           <div>
+                               <h4 class="mb-3">Purchase Report</h4>
+                               <p class="mb-0">{%block liness%}From {{start}} to {{end}}{%endblock%}</p>
+
+                           </div>
+                           {% comment %} <a href="page-add-purchase.tml" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Add Purchase</a> {% endcomment %}
+                       </div>
+                   </div>
+                   <div class="col-lg-12">
+                       <div class="table-responsive rounded mb-3">
+                       <table class="data-table table mb-0 tbl-server-info">
+                           <thead class="bg-white text-uppercase">
+                               <tr class="ligth ligth-data">
+                                   <th>
+                                       <div class="checkbox d-inline-block">
+                                           {% comment %} <input type="checkbox" class="checkbox-input" id="checkbox1"> {% endcomment %}
+                                           <label for="checkbox1" class="mb-0">S.N</label>
+                                       </div>
+                                   </th>
+                                   <th>Date</th>
+                                   {% comment %} <th>Reference No</th> {% endcomment %}
+                                   <th>Supplier</th>
+                                   {% comment %} <th>Purchase Status</th> {% endcomment %}
+                                   {% comment %} <th>Total</th> {% endcomment %}
+                                   <th>Paid</th>
+                                   {% comment %} <th>Balance</th> {% endcomment %}
+                                   {% comment %} <th>Payment Status</th> {% endcomment %}
+                                   <th>Action</th>
+                               </tr>
+                           </thead>
+                           {%for object in objects%}
+                           <tbody class="ligth-body">
+                               
+                               <tr>
+                                   <td>
+                                       <div class="checkbox d-inline-block">
+                                           <input type="checkbox" class="checkbox-input" id="checkbox7">
+                                           <label for="checkbox7" class="mb-0">{{forloop.counter}}</label>
+                                       </div>
+                                   </td>
+                                   <td>{{object.Date}}</td>
+                                   <td>{{object.Supplier}}</td>
+                                   {% comment %} <td>{{object.Total}}</td> {% endcomment %}
+                                   {% comment %} <td><div class="badge badge-success">Received</div></td> {% endcomment %}
+                                   <td>{{object.Payment}}</td>
+                                   {% comment %} <td>40.1</td>
+                                   <td>20.00</td>                             {% endcomment %}
+                                   {% comment %} <td><div class="badge badge-warning">Panding</div></td> {% endcomment %}
+                                   <td>
+                                       <div class="d-flex align-items-center list-action">
+                                           <a class="badge badge-info mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="View"
+                                               href="view{{object.id}}"><i class="ri-eye-line mr-0"></i></a>
+                                           <a class="badge bg-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"
+                                               href="#"><i class="ri-pencil-line mr-0"></i></a>
+                                           <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
+                                               href="#"><i class="ri-delete-bin-line mr-0"></i></a>
+                                       </div>
+                                   </td>
+                               </tr>
+                             
+                              
+                           </tbody>
+                           {%endfor%}
+                       </table>
+                       </div>
+                   </div>
+               </div>
+               <!-- Page end  -->
+           </div>
+       
+           <script>
+               $('a[data-original-title="Delete"]').on('click', function() {
+                   console.log($('a[data-original-title="Delete"]'))
+                   Swal.fire({
+                       title: "Are you sure?",
+                       text: "Once deleted, you will not be able to recover this imaginary file!",
+                       icon: "warning",
+                       buttons: true,
+                       dangerMode: true,
+                   })
+                   .then((willDelete) => {
+                       if (willDelete) {
+                           Swal.fire("Poof! Your imaginary file has been deleted!", {
+                               icon: "success",
+                           });
+                       } else {
+                           Swal.fire("Your imaginary file is safe!");
+                       }
+                   });
+               });
+           </script>
+
+
+           {% elif return%}
+           <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between mb-4">
+                        <div>
+                            <h4 class="mb-3">Returns Report</h4>
+                            <p class="mb-0">{%block line%}From {{start}} to {{end}}{%endblock%}</p>
+
+                        </div>
+                        {% comment %} <a href="{% url 'add-sale' %}" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>List Return</a> {% endcomment %}
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="table-responsive rounded mb-3">
+                    <table class="data-table table mb-0 tbl-server-info">
+                        <thead class="bg-white text-uppercase">
+                            <tr class="ligth ligth-data">
+                                <th>
+                                    <div class="checkbox d-inline-block">
+                                        <input type="checkbox" class="checkbox-input" id="checkbox1">
+                                        <label for="checkbox1" class="mb-0"></label>
+                                    </div>
+                                </th>
+                                <th>Date</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Total</th>
+                                <th>Paid</th>
+                                <th>Status</th>
+                                {% comment %} <th>Status</th> {% endcomment %}
+                                {% comment %} <th>Biller</th> {% endcomment %}
+                                
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="ligth-body">
+                        {%for obj in object%}
+                            <tr>
+                                <td>
+                                    <div class="checkbox d-inline-block">
+                                        <input type="checkbox" class="checkbox-input" id="checkbox2">
+                                        <label for="checkbox2" class="mb-0"></label>
+                                    </div>
+                                </td>
+                                <td>{{obj.Date}}</td>
+                                <td>{{obj.Customer}}</td>
+                                <td>{{obj.Product}}</td>
+                                <td>{{obj.Total}}</td>
+                                <td>{{obj.Paid}}</td>
+                                <td><div class="badge badge-success">{{obj.Payment_status}}  </div></td>
+                                {% comment %} <td>Yerds</td> {% endcomment %}
+                                {% comment %} <td>1.3</td> {% endcomment %}
+                                <td>
+                                    <div class="d-flex align-items-center list-action">
+                                     <a href="return-sales-page{{obj.id}}" class="btn btn-primary"> Return</a>
+                                    </div>
+                                </td>
+                            </tr>
+                           {%endfor%}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+
+
+            {%elif salesbill%}
+        
+                <div class="container-fluid">
+                   <div class="row">
+                       <div class="col-lg-12">
+                            <div class="d-flex flex-wrap align-items-center justify-content-between mb-4">
+                               <div>
+                                   <h4 class="mb-3">Sales List</h4>
+                            <p class="mb-0">{%block linme%}From {{start}} to {{end}}{%endblock%}</p>
+                            <p class="mb-0"></p>
+                               </div>
+                               <a href="add-sale-bill" class="btn btn-primary add-list"><i class="las la-plus mr-3"></i>Add SalesBill</a>
+                            </div>
+                       </div>
+                       {% comment %} <div class="col-lg-12">
+                           <div class="d-flex flex-wrap align-items-center justify-content-end mb-2">
+                               <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                                   <form method='POST' action='searchsalebill'>
+                                       {% csrf_token %}
+                                   <label class="d-flex">
+                                       Search: 
+                                       <input type="text" name="search" class="form-control form-control-sm" placeholder="Search here...." aria-controls="DataTables_Table_0">
+                                   </label>
+                               </form>
+                               </div>
+                           </div> {% endcomment %}
+                       </div>
+                       <div class="col-lg-12">
+                           <div class="table-responsive rounded mb-3">
+                           <table class="data-table table mb-0 tbl-server-info">
+                               <thead class="bg-white text-uppercase">
+                                   <tr class="ligth ligth-data">
+                                       <th>
+                                           <div class="checkbox d-inline-block">
+                                               {% comment %} <input type="checkbox" class="check?box-input" id="checkbox1"> {% endcomment %}
+                                               <label for="checkbox1" class="mb-0">S.N</label>
+                                           </div>
+                                       </th>
+                                       <th>Date</th>
+                                       {% comment %} <th>Reference No</th> {% endcomment %}
+                                       <th>Supplier</th>
+                                       {% comment %} <th>Purchase Status</th> {% endcomment %}
+                                       {% comment %} <th>Total</th> {% endcomment %}
+                                       <th>Paid</th>
+                                       {% comment %} <th>Balance</th> {% endcomment %}
+                                       {% comment %} <th>Payment Status</th> {% endcomment %}
+                                       <th>Action</th>
+                                   </tr>
+                               </thead>
+                               {%for object in objects%}
+                               <tbody class="ligth-body">
+                                   
+                                   <tr>
+                                       <td>
+                                           <div class="checkbox d-inline-block">
+                                               {% comment %} <input type="checkbox" class="checkbox-input" id="checkbox7"> {% endcomment %}
+                                               <label for="checkbox7" class="mb-0">{{forloop.counter}}</label>
+                                           </div>
+                                       </td>
+                                       <td>{{object.Date}}</td>
+                                       <td>{{object.Supplier}}</td>
+                                       {% comment %} <td>{{object.Total}}</td> {% endcomment %}
+                                       {% comment %} <td><div class="badge badge-success">Received</div></td> {% endcomment %}
+                                       <td>{{object.Payment}}</td>
+                                       {% comment %} <td>40.1</td>
+                                       <td>20.00</td>                             {% endcomment %}
+                                       {% comment %} <td><div class="badge badge-warning">Panding</div></td> {% endcomment %}
+                                       <td>
+                                           <div class="d-flex align-items-center list-action">
+                                               <a class="badge badge-info mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="View"
+                                                   href="views{{object.id}}"><i class="ri-eye-line mr-0"></i></a>
+                                               <a class="badge bg-success mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit"
+                                                   href="#"><i class="ri-pencil-line mr-0"></i></a>
+                                               <a class="badge bg-warning mr-2" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"
+                                                   href="#"><i class="ri-delete-bin-line mr-0"></i></a>
+                                           </div>
+                                       </td>
+                                   </tr>
+                                 
+                                  
+                               </tbody>
+                               {%endfor%}
+                           </table>
+                           </div>
+                       </div>
+                   </div>
+        {%endif%}
+
+       
+    {%endblock%}
+ 

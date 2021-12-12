@@ -1,0 +1,11 @@
+{% extends 'edit-sale-page.html' %}
+{%block title%}  Add Return {%endblock%}
+{%block username%}{{username}}{%endblock%}
+{%block sales%} Return Notes {%endblock%}
+{%block head%}Return Product{%endblock%}
+{%block head2%}{{business}}{%endblock%}
+{%block form%}<form action="add-return{{id}}" method='POST' data-toggle="validator">{%endblock%}
+{%block end%}
+<button type="submit" class="btn btn-primary mr-2">Add Return</button>
+                               <button type="reset" class="btn btn-danger">Reset</button>
+{%endblock%}
